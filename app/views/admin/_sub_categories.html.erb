@@ -1,0 +1,24 @@
+<script>
+ $(document).ready(function() {
+  $('#category-select').change(function() {
+    var categoryId = $(this).val();
+    $.ajax({
+      url: '/admin/get_subcategories',
+      method: 'GET',
+      data: { category_id: categoryId },
+      success: function(response) {
+        $('#sub-category-select').html('');
+        $.each(response, function(id, name) {
+          $('#sub-category-select').append($('<option>', {
+            value: id,
+            text: name
+          }));
+        });
+        // Select the correct subcategory based on the current value
+        var currentSubcategoryId = $('#sub-category-select').data('current-subcategory-id');
+        $('#sub-category-select').val(currentSubcategoryId);
+      }
+    });
+  });
+});
+</script>
